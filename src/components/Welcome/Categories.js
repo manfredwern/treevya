@@ -16,7 +16,8 @@ const Categories = ({ allCategories, onCategoryClick }) => (
 );
 
 Categories.propTypes = {
-  allCategories: PropTypes.arrayOf(PropTypes.array).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  allCategories: PropTypes.array.isRequired,
   onCategoryClick: PropTypes.func,
 };
 

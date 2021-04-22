@@ -12,8 +12,12 @@ const Login = () => {
     setPlayer(playerName);
   };
 
+  // Clear localStorage
+  if (localStorage.getItem('quiz_token')) {
+    localStorage.removeItem('quiz_token');
+  }
+
   const handleLogin = (e) => {
-    console.log(e);
     e.preventDefault();
     history.push({
       pathname: '/welcome',

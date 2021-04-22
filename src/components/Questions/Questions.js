@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 const Questions = ({ location }) => {
-  console.log(location);
   const { state } = location;
   const questionList = state.questions || [];
   const category = state.category || '';
@@ -19,16 +18,12 @@ const Questions = ({ location }) => {
 
   const handleAnswer = (answer) => {
     const correctAnswer = questionList[currentQuestion].correct_answer;
-    console.log('answered: ', answer);
-    console.log('correct answer is: ', correctAnswer);
     setCurrentCorrectAnswer(correctAnswer);
     setCurrentUserAnswer(answer);
     if (answer === questionList[currentQuestion].correct_answer) {
-      console.log('scored');
       setScore(score + 1);
     }
     setClicked(true);
-    console.log('score: ', score);
   };
   const handleNextQuestion = () => {
     setClicked(false);

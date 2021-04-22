@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Difficulty from './Difficulty';
@@ -24,7 +24,6 @@ const difficulty = [
   },
 ];
 
-// Fetch for Categories
 const fetchCategories = async () => {
   const res = await fetch('https://opentdb.com/api_category.php');
   const data = await res.json();
@@ -39,6 +38,12 @@ const fetchQuiz = async (url) => {
   return data.results;
 };
 
+const fetchToken = async (url) => {
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.token ? data.token : '';
+};
+
 const shuffleArray = (arr) => {
   arr.sort(() => Math.random() - 0.5);
 };
@@ -46,59 +51,85 @@ const shuffleArray = (arr) => {
 const Welcome = ({ location }) => {
   const { state } = location;
   const player = state;
-  console.log('STATE: ', player);
 
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState({ name: 'General Knowledge', id: 9 });
   const [selectedDifficulty, setSelectedDifficulty] = useState('easy');
+  const [isBankEmpty, setIsBankEmpty] = useState(false);
 
   const history = useHistory();
   const handleClick = async () => {
-    const u = `${quizUrl}&category=${category.id}&difficulty=${selectedDifficulty}`;
-    const q = await fetchQuiz(u).then((res) => {
-      const sortedResponse = res.map((resQuestion) => {
-        const choices = [...resQuestion.incorrect_answers, resQuestion.correct_answer];
-        shuffleArray(choices);
-        const fChoices = choices.map((c) => (c = decodeURIComponent(c)));
-        return (resQuestion = {
-          ...resQuestion,
-          correct_answer: decodeURIComponent(resQuestion.correct_answer),
-          question: decodeURIComponent(resQuestion.question),
-          choices: fChoices,
+    const token = localStorage.getItem('quiz_token');
+    let baseUrl = `${quizUrl}&category=${category.id}&difficulty=${selectedDifficulty}`;
+    if (token) {
+      baseUrl = `${baseUrl}&token=${token}`;
+    }
+
+    const questionBank = await fetchQuiz(baseUrl)
+      .then((res) => {
+        if (res.length) {
+          setIsBankEmpty(false);
+        }
+
+        const sortedResponse = res.map((resQuestion) => {
+          const choices = [...resQuestion.incorrect_answers, resQuestion.correct_answer];
+          shuffleArray(choices);
+          const decodedChoices = choices.map((c) => (c = decodeURIComponent(c)));
+          return (resQuestion = {
+            ...resQuestion,
+            correct_answer: decodeURIComponent(resQuestion.correct_answer),
+            question: decodeURIComponent(resQuestion.question),
+            choices: decodedChoices,
+          });
         });
+
+        return sortedResponse;
+      })
+      .catch((error) => {
+        console.log(error);
       });
 
-      console.log('FIXED', category);
-      console.log('FIXED', sortedResponse);
-      return sortedResponse;
-    });
+    console.log('BANK', questionBank);
 
-    history.push({
-      pathname: '/play',
-      state: {
-        category: category.name,
-        questions: q,
-        player,
-      },
-    });
+    if (!questionBank || !questionBank.length) {
+      setIsBankEmpty(true);
+    }
+
+    if (questionBank && questionBank.length) {
+      history.push({
+        pathname: '/play',
+        state: {
+          category: category.name,
+          questions: questionBank,
+          player,
+        },
+      });
+    }
   };
 
   useEffect(() => {
     const getCategories = async () => {
       const categoriesFromServer = await fetchCategories();
+      if (!localStorage.getItem('quiz_token')) {
+        fetchToken('https://opentdb.com/api_token.php?command=request').then((res) => {
+          if (res) {
+            localStorage.setItem('quiz_token', res);
+          }
+        });
+      }
       setCategories(categoriesFromServer);
     };
     getCategories();
   }, []);
 
   const onCategoryClick = (event) => {
-    console.log('SELECT', event.target.selectedOptions[0].id);
-    setCategory({ name: event.target.value, id: event.target.selectedOptions[0].id });
+    const id = event.target.selectedOptions[0].id || 0;
+    setCategory({ name: event.target.value, id });
   };
 
   const handleDifficultyChange = (event) => {
-    console.log('DIFFICULTY', event.target.selectedOptions[0].id);
-    setSelectedDifficulty(event.target.selectedOptions[0].id);
+    const id = event.target.selectedOptions[0].id || 0;
+    setSelectedDifficulty(id);
   };
 
   return (
@@ -108,8 +139,11 @@ const Welcome = ({ location }) => {
         height: '100vh',
       }}
     >
-      <div className="">
+      <div className="is-flex is-flex-direction-row is-justify-content-space-between">
         <p className="mb-2">Hi, {player}!</p>
+        <Link to="/" className="button is-small is-dark">
+          quit
+        </Link>
       </div>
 
       <div>
@@ -124,6 +158,11 @@ const Welcome = ({ location }) => {
         </div>
       </div>
       <div>
+        {isBankEmpty && (
+          <div className="notification has-background-black	 has-text-info-light has-text-centered">
+            choose another level or category{' '}
+          </div>
+        )}
         <button
           className="button is-large is-fullwidth has-background-success-dark	has-text-primary-light"
           type="button"

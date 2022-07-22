@@ -12,10 +12,12 @@ const Play = () => {
     let questionsUrl = `${TriviaApi.url}&category=${gamePlay.category.id}&difficulty=${gamePlay.level}`;
 
     const questions = await fetchDataFromApi(questionsUrl, true).then((data) => {
+      console.log('DATA', data);
       const sortedResponse = data.results.map((resQuestion) => {
         const choices = [...resQuestion.incorrect_answers, resQuestion.correct_answer];
         shuffleArray(choices);
         const decodedChoices = choices.map((c) => (c = decodeURIComponent(c)));
+        /** Add 'choices' property to the response Array */
         return (resQuestion = {
           ...resQuestion,
           correct_answer: decodeURIComponent(resQuestion.correct_answer),

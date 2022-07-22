@@ -9,6 +9,7 @@ export function QuizProvider({ children }) {
     score: '',
     level: '',
     questions: [],
+    newGame: false,
     // categories: [],
   };
 

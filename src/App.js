@@ -5,7 +5,7 @@ import Welcome from './components/Welcome';
 import { fetchDataFromApi } from './services/helper';
 import TriviaApi from './data/opentrivia';
 import { QuizProvider } from './QuizContext';
-import Questions from './components/Questions/Questions';
+import Questions from './components/Questions';
 
 function App() {
   const [player, setPlayer] = useState('');

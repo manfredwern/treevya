@@ -1,31 +1,25 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import QuizContext from '../QuizContext';
 
-const Login = () => {
+const Login = ({ name }) => {
+  const { setUser, gamePlay } = useContext(QuizContext);
+
   const [player, setPlayer] = useState('');
-  const history = useHistory();
-  const handlePlayer = (userInput) => {
-    userInput.preventDefault();
-    const playerName = userInput.target.value;
 
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    const playerName = event.target.value;
     setPlayer(playerName);
   };
 
-  // Clear localStorage
-  if (localStorage.getItem('quiz_token')) {
-    localStorage.removeItem('quiz_token');
-  }
-
   const handleLogin = (e) => {
-    e.preventDefault();
-    history.push({
-      pathname: '/welcome',
-      state: player,
-    });
+    // e.preventDefault();
+    console.log(player);
+    setUser(player);
   };
 
-  return (
+  const div = !gamePlay.player ? (
     <>
       <form
         className="on-mobile  is-flex is-flex-direction-column	is-flex-wrap-wrap	is-justify-content-space-between p-5"
@@ -49,20 +43,25 @@ const Login = () => {
               placeholder="Enter your name"
               name="player"
               required
-              onChange={handlePlayer}
+              onChange={handleInputChange}
             />
           </div>
         </div>
         <button
           type="button"
           className="button is-large is-primary"
-          onClick={handleLogin}
+          onClick={() => handleLogin()}
           disabled={!player}
         >
-          Start
+          Play!
         </button>
       </form>
     </>
+  ) : (
+    ''
   );
+
+  return <>{div}</>;
 };
+
 export default Login;

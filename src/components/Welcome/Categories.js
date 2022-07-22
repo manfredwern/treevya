@@ -1,28 +1,63 @@
-import React from 'react';
-import PropTypes, { func } from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import QuizContext from '../../QuizContext';
+import { fetchDataFromApi } from '../../services/helper';
+import TriviaApi from '../../data/opentrivia';
+import cats from '../../data/categories';
 
-const Categories = ({ allCategories, onCategoryClick }) => (
-  <>
-    <div className="select is-large is-fullwidth">
-      <select onChange={onCategoryClick}>
-        {allCategories.map((category) => (
-          <option key={category.id} id={category.id} className={category.id}>
-            {category.name}
-          </option>
-        ))}
-      </select>
-    </div>
-  </>
-);
+const Categories = () => {
+  const { setCategory } = useContext(QuizContext);
 
-Categories.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  allCategories: PropTypes.array.isRequired,
-  onCategoryClick: PropTypes.func,
-};
+  const [categories, setCategories] = useState([]);
 
-Categories.defaultProps = {
-  onCategoryClick: func,
+  const handleChange = (event) => {
+    const id = event.target.selectedOptions[0].id || 0;
+    setCategory({ name: event.target.value, id });
+  };
+
+  /**
+   * Fetch a list of Categories from API
+   */
+  useEffect(() => {
+    (async function () {
+      const responseCategories = await fetchDataFromApi(TriviaApi.category).then((res) =>
+        res.trivia_categories.map(
+          (category) =>
+            (category = {
+              ...category,
+              name: category.name.replace(/Entertainment:|Science:/, '').trim(),
+            })
+        )
+      );
+      setCategories([...cats, ...responseCategories]);
+    })();
+
+    return setCategories([]);
+  }, []);
+
+  const div = categories.length ? (
+    <>
+      <div className="select is-large is-fullwidth">
+        <select onChange={handleChange} defaultValue={'Select Category'}>
+          {categories &&
+            categories.map((category) => (
+              <option
+                key={category.id}
+                id={category.id}
+                className={category.id}
+                disabled={category.disabled}
+              >
+                {category.name}
+              </option>
+            ))}
+        </select>
+      </div>
+    </>
+  ) : (
+    'LOADING'
+  );
+
+  return div;
 };
 
 export default Categories;

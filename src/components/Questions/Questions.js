@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import QuizContext from '../../QuizContext';
 
-const Questions = ({ location }) => {
-  const { state } = location;
+const Questions = () => {
+  const { gamePlay } = useContext(QuizContext);
+  console.log('GAMESPLSAZ', gamePlay);
+
+  const state = gamePlay;
   const questionList = state.questions || [];
   const category = state.category || '';
   const player = state.player || 'player';
-  const history = useHistory();
+  // const history = useHistory();
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -21,14 +23,14 @@ const Questions = ({ location }) => {
     setCurrentCorrectAnswer(correctAnswer);
     setCurrentUserAnswer(answer);
     if (answer === questionList[currentQuestion].correct_answer) {
-      setScore(score + 1);
+      setScore((prevState) => prevState + 1);
     }
     setClicked(true);
   };
   const handleNextQuestion = () => {
     setClicked(false);
     if (currentQuestion < questionList.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+      setCurrentQuestion((prevState) => prevState + 1);
     } else {
       setShowScore(true);
     }
@@ -40,13 +42,13 @@ const Questions = ({ location }) => {
     setScore(0);
     setCurrentQuestion(0);
 
-    history.push({
-      pathname: '/welcome',
-      state: player,
-    });
+    // history.push({
+    //   pathname: '/welcome',
+    //   state: player,
+    // });
   };
 
-  return (
+  const div = gamePlay.questions?.length ? (
     <div className="on-mobile is-flex is-flex-direction-column	is-flex-wrap-wrap	is-justify-content-space-between p-5">
       {showScore ? (
         <>
@@ -122,15 +124,19 @@ const Questions = ({ location }) => {
         </div>
       )}
     </div>
+  ) : (
+    ''
   );
+
+  return div;
 };
 
-Questions.propTypes = {
-  location: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-};
+// Questions.propTypes = {
+//   location: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+// };
 
-Questions.defaultProps = {
-  location: {},
-};
+// Questions.defaultProps = {
+//   location: {},
+// };
 
 export default Questions;

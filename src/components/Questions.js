@@ -2,9 +2,9 @@ import React, { useContext, useState } from 'react';
 import QuizContext from '../QuizContext';
 
 const Questions = () => {
-  const { gamePlay } = useContext(QuizContext);
+  const { gamePlay, setNewGame, setQuestions, setLevel, setCategory } = useContext(QuizContext);
 
-  const { questions: questionBank, category, player } = gamePlay;
+  const { questions: questionBank, category, player, level } = gamePlay;
 
   const [quesNumber, setQuesNumber] = useState(0);
   const [score, setScore] = useState(0);
@@ -39,54 +39,72 @@ const Questions = () => {
     setQuesNumber(0);
   };
 
+  const handleNewGame = () => {
+    setShowScore(false);
+    setClicked(false);
+    setScore(0);
+    setQuesNumber(0);
+
+    setNewGame();
+    setQuestions([]);
+    setLevel('');
+    setCategory({});
+  };
+
   const div = gamePlay.questions?.length ? (
     <div className="on-mobile is-flex is-flex-direction-column	is-flex-wrap-wrap	is-justify-content-space-between p-5">
       {showScore ? (
         <>
           <div>
-            <p>Quiz completed</p>
-            <p className="is-size-5">{score > 6 ? 'Contratulations' : ''}</p>
+            <p className="subtitle has-text-centered">
+              {category.name} ({level})
+            </p>
           </div>
           <div>
+            <p className="is-size-4 has-text-centered">
+              {score > 5 ? 'Congratulations!' : 'You failed the quiz, better luck next time'}
+            </p>
             <p className="title has-text-centered">{player}, your score is</p>
             <p className="title has-text-centered">
               {score} out of {questionBank.length}
             </p>
           </div>
+
           <div>
             <button
               type="button"
-              className="button is-large is-fullwidth has-background-success-dark	has-text-primary-light"
+              className="button p-6 is-large is-fullwidth has-background-success-dark	has-text-primary-light title"
               onClick={() => handlePlayAgain()}
             >
-              Play again
+              Retake the quiz
             </button>
             <button
               type="button"
-              className="button is-large is-fullwidth has-background-success-dark	has-text-primary-light"
-              onClick={() => console.log('new game')}
+              className="button p-6 is-large is-fullwidth has-background-success-dark	has-text-primary-light title"
+              onClick={() => handleNewGame()}
             >
               New Game
             </button>
           </div>
         </>
       ) : (
-        <>
+        <div className="is-flex is-flex-direction-column">
           <div className="is-flex is-flex-direction-row-reverse	is-justify-content-space-between is-size-7 mb-4">
-            <p>{category.name}</p>
             <p>
-              {quesNumber + 1} / {questionBank?.length}
+              {category.name} {quesNumber + 1} / {questionBank?.length}
             </p>
+            <p>Score: {score}</p>
           </div>
           <div className="title is-size-5 has-text-centered pb-4">
             {questionBank?.length && questionBank[quesNumber].question}
           </div>
+
           {questionBank?.length &&
             questionBank[quesNumber].choices.map((choice, index) => (
               <div className="mb-2" key={index}>
                 <button
                   type="button"
-                  className={`button is-fullwidth is-medium
+                  className={`button is-fullwidth is-large
                   ${
                     clicked && choice === currentCorrectAnswer && currentUserAnswer !== choice
                       ? 'is-danger'
@@ -122,7 +140,7 @@ const Questions = () => {
               </button>
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   ) : (

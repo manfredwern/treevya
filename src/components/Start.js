@@ -1,12 +1,16 @@
 import React from 'react';
-import Categories from './Welcome/Categories';
-import Difficulty from './Welcome/Difficulty';
+import Categories from './Categories';
+import Difficulty from './Difficulty';
 import { useContext } from 'react';
 import QuizContext from '../QuizContext';
 import Play from './Play';
 
-const Welcome = () => {
-  const { gamePlay } = useContext(QuizContext);
+const Start = () => {
+  const { gamePlay, setUser } = useContext(QuizContext);
+
+  const handleQuit = () => {
+    setUser('');
+  };
 
   const div =
     gamePlay.player && !gamePlay.questions.length ? (
@@ -18,9 +22,9 @@ const Welcome = () => {
       >
         <div className="is-flex is-flex-direction-row is-justify-content-space-between">
           <p className="mb-2">Hi, {gamePlay.player}!</p>
-          {/* <Link to="/" className="button is-small is-dark">
-          quit
-        </Link> */}
+          <button type="button" className="button is-small is-dark" onClick={handleQuit}>
+            quit
+          </button>
         </div>
 
         <div>
@@ -35,11 +39,11 @@ const Welcome = () => {
           </div>
         </div>
         <div>
-          {!gamePlay.questions?.length && (
+          {/* {!gamePlay.questions?.length && (
             <div className="notification has-background-black	 has-text-info-light has-text-centered">
               choose another level or category{' '}
             </div>
-          )}
+          )} */}
           <Play></Play>
         </div>
       </div>
@@ -50,4 +54,4 @@ const Welcome = () => {
   return div;
 };
 
-export default Welcome;
+export default Start;

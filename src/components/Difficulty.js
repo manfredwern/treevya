@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import Level from '../../data/level';
-import QuizContext from '../../QuizContext';
+import Level from '../data/level';
+import QuizContext from '../QuizContext';
 
 const Difficulty = () => {
   const { setLevel } = useContext(QuizContext);

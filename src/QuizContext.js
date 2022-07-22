@@ -9,8 +9,7 @@ export function QuizProvider({ children }) {
     score: '',
     level: '',
     questions: [],
-    newGame: false,
-    // categories: [],
+    newGame: true,
   };
 
   const [gamePlay, setGamePlay] = useState(initialValue);
@@ -31,12 +30,18 @@ export function QuizProvider({ children }) {
     setGamePlay((prevState) => ({ ...prevState, questions }));
   };
 
+  const setNewGame = () => {
+    setGamePlay((prevState) => ({ ...prevState, newGame: !prevState.newGame }));
+  };
+
   useEffect(() => {
     console.log('CONTEXT', gamePlay);
   }, [gamePlay]);
 
   return (
-    <QuizContext.Provider value={{ gamePlay, setUser, setCategory, setLevel, setQuestions }}>
+    <QuizContext.Provider
+      value={{ gamePlay, setUser, setCategory, setLevel, setQuestions, setNewGame }}
+    >
       {children}
     </QuizContext.Provider>
   );

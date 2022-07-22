@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
-import QuizContext from '../../QuizContext';
-import { fetchDataFromApi } from '../../services/helper';
-import TriviaApi from '../../data/opentrivia';
-import cats from '../../data/categories';
+import QuizContext from '../QuizContext';
+import { fetchDataFromApi } from '../services/helper';
+import TriviaApi from '../data/opentrivia';
+import cats from '../data/categories';
 
 const Categories = () => {
   const { setCategory } = useContext(QuizContext);
@@ -54,7 +54,7 @@ const Categories = () => {
       </div>
     </>
   ) : (
-    'LOADING'
+    'Collecting categories'
   );
 
   return div;

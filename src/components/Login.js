@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useContext } from 'react';
 import QuizContext from '../QuizContext';
 
-const Login = ({ name }) => {
+const Login = () => {
   const { setUser, gamePlay } = useContext(QuizContext);
 
   const [player, setPlayer] = useState('');
@@ -14,8 +14,6 @@ const Login = ({ name }) => {
   };
 
   const handleLogin = (e) => {
-    // e.preventDefault();
-    console.log(player);
     setUser(player);
   };
 
@@ -49,7 +47,7 @@ const Login = ({ name }) => {
         </div>
         <button
           type="button"
-          className="button is-large is-primary"
+          className="button p-6 is-size-2 is-large is-primary"
           onClick={() => handleLogin()}
           disabled={!player}
         >

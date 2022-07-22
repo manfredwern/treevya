@@ -4,7 +4,7 @@ import TriviaApi from '../data/opentrivia';
 import { fetchDataFromApi, shuffleArray } from '../services/helper';
 
 const Play = () => {
-  const { gamePlay, setQuestions } = useContext(QuizContext);
+  const { gamePlay, setQuestions, setNewGame } = useContext(QuizContext);
 
   console.log(gamePlay);
 
@@ -29,12 +29,13 @@ const Play = () => {
     });
 
     setQuestions(questions);
+    setNewGame();
   };
 
   return (
     <>
       <button
-        className="button is-large is-fullwidth has-background-success-dark	has-text-primary-light"
+        className="button  p-6 is-size-2 is-large is-fullwidth has-background-success-dark	has-text-primary-light"
         type="button"
         disabled={!gamePlay.level}
         onClick={handleClick}

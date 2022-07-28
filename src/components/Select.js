@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import QuizContext from '../QuizContext';
 import Play from './Play';
 
-const Start = () => {
+const Select = () => {
   const { gamePlay, setUser } = useContext(QuizContext);
 
   const handleQuit = () => {
@@ -54,4 +54,4 @@ const Start = () => {
   return div;
 };
 
-export default Start;
+export default Select;

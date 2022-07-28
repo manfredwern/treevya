@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import QuizContext from '../QuizContext';
 
-const Login = () => {
+const Welcome = () => {
   const { setUser, gamePlay } = useContext(QuizContext);
 
   const [player, setPlayer] = useState('');
@@ -62,4 +62,4 @@ const Login = () => {
   return <>{div}</>;
 };
 
-export default Login;
+export default Welcome;

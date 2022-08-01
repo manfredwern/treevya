@@ -1,31 +1,23 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import QuizContext from '../QuizContext';
 
-const Login = () => {
+const Welcome = () => {
+  const { setUser, gamePlay } = useContext(QuizContext);
+
   const [player, setPlayer] = useState('');
-  const history = useHistory();
-  const handlePlayer = (userInput) => {
-    userInput.preventDefault();
-    const playerName = userInput.target.value;
 
+  const handleNameInput = (event) => {
+    event.preventDefault();
+    const playerName = event.target.value;
     setPlayer(playerName);
   };
 
-  // Clear localStorage
-  if (localStorage.getItem('quiz_token')) {
-    localStorage.removeItem('quiz_token');
-  }
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    history.push({
-      pathname: '/welcome',
-      state: player,
-    });
+  const handlePlay = (e) => {
+    setUser(player);
   };
 
-  return (
+  const div = !gamePlay.player ? (
     <>
       <form
         className="on-mobile  is-flex is-flex-direction-column	is-flex-wrap-wrap	is-justify-content-space-between p-5"
@@ -36,7 +28,7 @@ const Login = () => {
       >
         <div>
           <p className="has-text-centered">Welcome to</p>
-          <h1 className="is-size-1 has-text-centered is-uppercase has-text-weight-bold">Treevya</h1>
+          <h1 className="has-text-centered is-uppercase has-text-weight-bold">Treevya</h1>
         </div>
         <div className="field">
           <label htmlFor="player" className="label">
@@ -49,20 +41,25 @@ const Login = () => {
               placeholder="Enter your name"
               name="player"
               required
-              onChange={handlePlayer}
+              onChange={handleNameInput}
             />
           </div>
         </div>
         <button
           type="button"
-          className="button is-large is-primary"
-          onClick={handleLogin}
+          className="button p-6 is-size-2 is-large play-button"
+          onClick={() => handlePlay()}
           disabled={!player}
         >
-          Start
+          Play!
         </button>
       </form>
     </>
+  ) : (
+    ''
   );
+
+  return <>{div}</>;
 };
-export default Login;
+
+export default Welcome;

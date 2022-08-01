@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import QuizContext from '../QuizContext';
 import { fetchDataFromApi } from '../services/helper';
 import TriviaApi from '../data/opentrivia';
-import cats from '../data/categories';
+import initialCategories from '../data/categories';
 
 const Categories = () => {
   const { setCategory } = useContext(QuizContext);
@@ -29,7 +28,7 @@ const Categories = () => {
             })
         )
       );
-      setCategories([...cats, ...responseCategories]);
+      setCategories([...initialCategories, ...responseCategories]);
     })();
 
     return setCategories([]);

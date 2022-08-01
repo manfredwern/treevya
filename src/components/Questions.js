@@ -88,7 +88,7 @@ const Questions = () => {
           </div>
         </>
       ) : (
-        <div className="is-flex is-flex-direction-column">
+        <>
           <div className="is-flex is-flex-direction-row-reverse	is-justify-content-space-between is-size-7 mb-4">
             <p>
               {category.name} {quesNumber + 1} / {questionBank?.length}
@@ -129,18 +129,22 @@ const Questions = () => {
                 </button>
               </div>
             ))}
-          {clicked && (
-            <div>
-              <button
-                type="button"
-                className="button p-5 is-large is-fullwidth is-warning"
-                onClick={handleNextQuestion}
-              >
-                {quesNumber + 1 !== questionBank.length ? 'Next' : 'Show score'}
-              </button>
-            </div>
-          )}
-        </div>
+
+          <div>
+            <button
+              type="button"
+              className="button p-5 is-large is-fullwidth is-warning"
+              onClick={handleNextQuestion}
+              disabled={!clicked}
+            >
+              {!clicked
+                ? 'Try your best!'
+                : quesNumber + 1 !== questionBank.length
+                ? 'Next'
+                : 'Show score'}
+            </button>
+          </div>
+        </>
       )}
     </div>
   ) : (

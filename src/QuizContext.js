@@ -34,10 +34,6 @@ export function QuizProvider({ children }) {
     setGamePlay((prevState) => ({ ...prevState, newGame: !prevState.newGame }));
   };
 
-  useEffect(() => {
-    console.log('CONTEXT', gamePlay);
-  }, [gamePlay]);
-
   return (
     <QuizContext.Provider
       value={{ gamePlay, setUser, setCategory, setLevel, setQuestions, setNewGame }}

@@ -1,3 +1,7 @@
+/**
+ * Shared helper functions
+ */
+
 export const fetchDataFromApi = async (url, useToken = false) => {
   const token = localStorage.getItem('quiz_token');
   if (!url) return;
@@ -5,7 +9,7 @@ export const fetchDataFromApi = async (url, useToken = false) => {
     url += `&token=${token}`;
   }
 
-  console.log('URL: ', url);
+  console.log('REQUEST URL: ', url);
   const res = await fetch(url);
   const data = await res.json();
   return data || [];

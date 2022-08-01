@@ -3,9 +3,9 @@ import Categories from './Categories';
 import Difficulty from './Difficulty';
 import { useContext } from 'react';
 import QuizContext from '../QuizContext';
-import Play from './Play';
+import PlayGame from './PlayGame';
 
-const Start = () => {
+const GameSelect = () => {
   const { gamePlay, setUser } = useContext(QuizContext);
 
   const handleQuit = () => {
@@ -22,8 +22,8 @@ const Start = () => {
       >
         <div className="is-flex is-flex-direction-row is-justify-content-space-between">
           <p className="mb-2">Hi, {gamePlay.player}!</p>
-          <button type="button" className="button is-small is-dark" onClick={handleQuit}>
-            quit
+          <button type="button" className="button is-small is-danger" onClick={handleQuit}>
+            Exit game
           </button>
         </div>
 
@@ -38,14 +38,7 @@ const Start = () => {
             <Difficulty />
           </div>
         </div>
-        <div>
-          {/* {!gamePlay.questions?.length && (
-            <div className="notification has-background-black	 has-text-info-light has-text-centered">
-              choose another level or category{' '}
-            </div>
-          )} */}
-          <Play></Play>
-        </div>
+        <PlayGame />
       </div>
     ) : (
       ''
@@ -54,4 +47,4 @@ const Start = () => {
   return div;
 };
 
-export default Start;
+export default GameSelect;

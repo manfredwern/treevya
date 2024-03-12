@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import QuizContext from '../QuizContext';
 import { fetchDataFromApi } from '../services/helper';
 import TriviaApi from '../data/opentrivia';
@@ -21,13 +20,10 @@ const Categories = () => {
   useEffect(() => {
     (async function () {
       const responseCategories = await fetchDataFromApi(TriviaApi.category).then((res) =>
-        res.trivia_categories.map(
-          (category) =>
-            (category = {
-              ...category,
-              name: category.name.replace(/Entertainment:|Science:/, '').trim(),
-            })
-        )
+        res.trivia_categories.map((category) => ({
+          ...category,
+          name: category.name.replace(/Entertainment:|Science:/, '').trim(),
+        })),
       );
       setCategories([...cats, ...responseCategories]);
     })();

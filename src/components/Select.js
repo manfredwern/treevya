@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Categories from './Categories';
 import Difficulty from './Difficulty';
-import { useContext } from 'react';
 import QuizContext from '../QuizContext';
 import Play from './Play';
 
@@ -39,11 +38,6 @@ const Select = () => {
           </div>
         </div>
         <div>
-          {/* {!gamePlay.questions?.length && (
-            <div className="notification has-background-black	 has-text-info-light has-text-centered">
-              choose another level or category{' '}
-            </div>
-          )} */}
           <Play></Play>
         </div>
       </div>

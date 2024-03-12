@@ -16,14 +16,14 @@ const Play = () => {
       const sortedResponse = data.results.map((resQuestion) => {
         const choices = [...resQuestion.incorrect_answers, resQuestion.correct_answer];
         shuffleArray(choices);
-        const decodedChoices = choices.map((c) => (c = decodeURIComponent(c)));
+        const decodedChoices = choices.map((c) => decodeURIComponent(c));
         /** Add 'choices' property to the response Array */
-        return (resQuestion = {
+        return {
           ...resQuestion,
           correct_answer: decodeURIComponent(resQuestion.correct_answer),
           question: decodeURIComponent(resQuestion.question),
           choices: decodedChoices,
-        });
+        };
       });
       return sortedResponse;
     });

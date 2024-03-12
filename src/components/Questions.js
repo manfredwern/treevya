@@ -109,8 +109,8 @@ const Questions = () => {
                     clicked && choice === currentCorrectAnswer && currentUserAnswer !== choice
                       ? 'is-danger'
                       : clicked && choice === currentCorrectAnswer && currentUserAnswer === choice
-                      ? 'is-success'
-                      : ''
+                        ? 'is-success'
+                        : ''
                   }`}
                   style={{
                     height: 'auto',

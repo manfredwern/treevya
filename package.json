@@ -44,7 +44,6 @@
     "@babel/eslint-parser": "^7.23.10",
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "babel-preset-airbnb": "^5.0.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.10.0",

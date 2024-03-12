@@ -15,6 +15,6 @@ export const fetchDataFromApi = async (url, useToken = false) => {
   return data || [];
 };
 
-export const shuffleArray = (arr) => {
+export const shuffleArray = arr => {
   arr.sort(() => Math.random() - 0.5);
 };

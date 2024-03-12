@@ -13,12 +13,12 @@ const Questions = () => {
   const [currentCorrectAnswer, setCurrentCorrectAnswer] = useState('');
   const [currentUserAnswer, setCurrentUserAnswer] = useState('');
 
-  const handleAnswer = (answer) => {
+  const handleAnswer = answer => {
     const correctAnswer = questionBank[quesNumber].correct_answer;
     setCurrentCorrectAnswer(correctAnswer);
     setCurrentUserAnswer(answer);
     if (answer === questionBank[quesNumber].correct_answer) {
-      setScore((prevState) => prevState + 1);
+      setScore(prevState => prevState + 1);
     }
     setClicked(true);
   };
@@ -26,7 +26,7 @@ const Questions = () => {
   const handleNextQuestion = () => {
     setClicked(false);
     if (quesNumber < questionBank?.length - 1) {
-      setQuesNumber((prevState) => prevState + 1);
+      setQuesNumber(prevState => prevState + 1);
     } else {
       setShowScore(true);
     }
@@ -51,6 +51,8 @@ const Questions = () => {
     setCategory({});
   };
 
+  const buttonLabel = !clicked ? 'Try your best!' : quesNumber + 1 !== questionBank.length ? 'Next' : 'Show score';
+
   const div = gamePlay.questions?.length ? (
     <div className="on-mobile is-flex is-flex-direction-column	is-flex-wrap-wrap	is-justify-content-space-between p-5">
       {showScore ? (
@@ -61,9 +63,7 @@ const Questions = () => {
             </p>
           </div>
           <div>
-            <p className="is-size-4 has-text-centered">
-              {score > 5 ? 'Congratulations!' : 'You failed the quiz, better luck next time'}
-            </p>
+            <p className="is-size-4 has-text-centered">{score > 5 ? 'Congratulations!' : 'You failed the quiz, better luck next time'}</p>
             <p className="title has-text-centered">{player}, your score is</p>
             <p className="title has-text-centered">
               {score} out of {questionBank.length}
@@ -71,18 +71,10 @@ const Questions = () => {
           </div>
 
           <div>
-            <button
-              type="button"
-              className="button p-6 is-large is-fullwidth has-background-success-dark	has-text-primary-light title"
-              onClick={() => handlePlayAgain()}
-            >
+            <button type="button" className="button p-6 is-large is-fullwidth has-background-success-dark	has-text-primary-light title" onClick={() => handlePlayAgain()}>
               Retake the quiz
             </button>
-            <button
-              type="button"
-              className="button p-6 is-large is-fullwidth has-background-success-dark	has-text-primary-light title"
-              onClick={() => handleNewGame()}
-            >
+            <button type="button" className="button p-6 is-large is-fullwidth has-background-success-dark	has-text-primary-light title" onClick={() => handleNewGame()}>
               New Game
             </button>
           </div>
@@ -95,9 +87,7 @@ const Questions = () => {
             </p>
             <p>Score: {score}</p>
           </div>
-          <div className="title is-size-5 has-text-centered pb-4">
-            {questionBank?.length && questionBank[quesNumber].question}
-          </div>
+          <div className="title is-size-5 has-text-centered pb-4">{questionBank?.length && questionBank[quesNumber].question}</div>
 
           {questionBank?.length &&
             questionBank[quesNumber].choices.map((choice, index) => (
@@ -114,14 +104,14 @@ const Questions = () => {
                   }`}
                   style={{
                     height: 'auto',
-                    border: currentUserAnswer === choice ? '3px solid #333' : '',
+                    border: currentUserAnswer === choice ? '3px solid #333' : ''
                   }}
                   onClick={() => handleAnswer(choice)}
                   disabled={clicked}
                 >
                   <p
                     style={{
-                      whiteSpace: 'break-spaces',
+                      whiteSpace: 'break-spaces'
                     }}
                   >
                     {choice}
@@ -131,17 +121,8 @@ const Questions = () => {
             ))}
 
           <div>
-            <button
-              type="button"
-              className="button p-5 is-large is-fullwidth is-warning"
-              onClick={handleNextQuestion}
-              disabled={!clicked}
-            >
-              {!clicked
-                ? 'Try your best!'
-                : quesNumber + 1 !== questionBank.length
-                ? 'Next'
-                : 'Show score'}
+            <button type="button" className="button p-5 is-large is-fullwidth is-warning" onClick={handleNextQuestion} disabled={!clicked}>
+              {buttonLabel}
             </button>
           </div>
         </>

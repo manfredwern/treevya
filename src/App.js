@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import Welcome from './components/Welcome';
-import GameSelect from './components/GameSelect';
-import { fetchDataFromApi } from './services/helper';
-import TriviaApi from './data/opentrivia';
 import { QuizProvider } from './QuizContext';
+import GameSelect from './components/GameSelect';
 import Questions from './components/Questions';
+import Welcome from './components/Welcome';
+import TriviaApi from './data/opentrivia';
+import { fetchDataFromApi } from './services/helper';
 
 function App() {
   /**
@@ -13,7 +13,7 @@ function App() {
    */
   useEffect(() => {
     if (!localStorage.getItem('quiz_token')) {
-      fetchDataFromApi(TriviaApi.token).then((response) => {
+      fetchDataFromApi(TriviaApi.token).then(response => {
         if (response?.token) {
           localStorage.setItem('quiz_token', response.token);
         }

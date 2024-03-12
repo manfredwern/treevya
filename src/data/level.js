@@ -2,20 +2,20 @@ const difficulty = [
   {
     key: 'Select Level',
     value: 'none',
-    disabled: true,
+    disabled: true
   },
   {
     key: 'Easy',
-    value: 'easy',
+    value: 'easy'
   },
   {
     key: 'Medium',
-    value: 'medium',
+    value: 'medium'
   },
   {
     key: 'Hard',
-    value: 'hard',
-  },
+    value: 'hard'
+  }
 ];
 
 export default difficulty;

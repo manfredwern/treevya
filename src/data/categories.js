@@ -2,8 +2,8 @@ const categories = [
   {
     id: 0,
     name: 'Select Category',
-    disabled: true,
-  },
+    disabled: true
+  }
 ];
 
 export default categories;

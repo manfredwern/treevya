@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
+import QuizContext from '../QuizContext';
 import Categories from './Categories';
 import Difficulty from './Difficulty';
-import QuizContext from '../QuizContext';
 import PlayGame from './PlayGame';
 
 const GameSelect = () => {
@@ -16,7 +16,7 @@ const GameSelect = () => {
       <div
         className="on-mobile is-flex is-flex-direction-column	is-flex-wrap-wrap	is-justify-content-space-between p-5"
         style={{
-          height: '100vh',
+          height: '100vh'
         }}
       >
         <div className="is-flex is-flex-direction-row is-justify-content-space-between">
@@ -27,9 +27,7 @@ const GameSelect = () => {
         </div>
 
         <div>
-          <p className="is-size-4	has-text-centered	has-text-weight-bold mb-6">
-            Choose a category and difficulty
-          </p>
+          <p className="is-size-4	has-text-centered	has-text-weight-bold mb-6">Choose a category and difficulty</p>
           <div className="mb-6">
             <Categories />
           </div>

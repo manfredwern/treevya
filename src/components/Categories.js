@@ -20,13 +20,10 @@ const Categories = () => {
   useEffect(() => {
     (async function () {
       const responseCategories = await fetchDataFromApi(TriviaApi.category).then((res) =>
-        res.trivia_categories.map(
-          (category) =>
-            (category = {
-              ...category,
-              name: category.name.replace(/Entertainment:|Science:/, '').trim(),
-            })
-        )
+        res.trivia_categories.map((category) => ({
+          ...category,
+          name: category.name.replace(/Entertainment:|Science:/, '').trim(),
+        })),
       );
       setCategories([...initialCategories, ...responseCategories]);
     })();
@@ -35,23 +32,20 @@ const Categories = () => {
   }, []);
 
   const div = categories.length ? (
-    <>
-      <div className="select is-large is-fullwidth">
-        <select onChange={handleChange} defaultValue={'Select Category'}>
-          {categories &&
-            categories.map((category) => (
-              <option
-                key={category.id}
-                id={category.id}
-                className={category.id}
-                disabled={category.disabled}
-              >
-                {category.name}
-              </option>
-            ))}
-        </select>
-      </div>
-    </>
+    <div className="select is-large is-fullwidth">
+      <select onChange={handleChange} defaultValue={'Select Category'}>
+        {categories?.map((category) => (
+          <option
+            key={category.id}
+            id={category.id}
+            className={category.id}
+            disabled={category.disabled}
+          >
+            {category.name}
+          </option>
+        ))}
+      </select>
+    </div>
   ) : (
     'Collecting categories'
   );

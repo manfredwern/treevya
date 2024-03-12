@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     if (!localStorage.getItem('quiz_token')) {
       fetchDataFromApi(TriviaApi.token).then((response) => {
-        if (response && response.token) {
+        if (response?.token) {
           localStorage.setItem('quiz_token', response.token);
         }
       });

@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { useContext } from 'react';
 import QuizContext from '../QuizContext';
 
 const Welcome = () => {
@@ -6,13 +7,13 @@ const Welcome = () => {
 
   const [player, setPlayer] = useState('');
 
-  const handleInputChange = (event) => {
+  const handleNameInput = (event) => {
     event.preventDefault();
     const playerName = event.target.value;
     setPlayer(playerName);
   };
 
-  const handleLogin = (e) => {
+  const handlePlay = (e) => {
     setUser(player);
   };
 
@@ -26,7 +27,7 @@ const Welcome = () => {
     >
       <div>
         <p className="has-text-centered">Welcome to</p>
-        <h1 className="has-text-centered is-uppercase has-text-weight-bold game-title">Treevya</h1>
+        <h1 className="has-text-centered is-uppercase has-text-weight-bold">Treevya</h1>
       </div>
       <div className="field">
         <label htmlFor="player" className="label">
@@ -39,14 +40,14 @@ const Welcome = () => {
             placeholder="Enter your name"
             name="player"
             required
-            onChange={handleInputChange}
+            onChange={handleNameInput}
           />
         </div>
       </div>
       <button
         type="button"
-        className="button p-6 is-size-2 is-large is-primary"
-        onClick={() => handleLogin()}
+        className="button p-6 is-size-2 is-large play-button"
+        onClick={() => handlePlay()}
         disabled={!player}
       >
         Play!

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import Welcome from './components/Welcome';
-import Select from './components/Select';
+import GameSelect from './components/GameSelect';
 import { fetchDataFromApi } from './services/helper';
 import TriviaApi from './data/opentrivia';
 import { QuizProvider } from './QuizContext';
@@ -24,16 +24,12 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <div className=" has-background-white-bis">
-        <div className="container box is-max-desktop main-app">
-          <QuizProvider>
-            <Welcome />
-            <Select />
-            <Questions />
-          </QuizProvider>
-        </div>
-      </div>
+    <div className="container box is-max-desktop main-app app-background">
+      <QuizProvider>
+        <Welcome />
+        <GameSelect />
+        <Questions />
+      </QuizProvider>
     </div>
   );
 }

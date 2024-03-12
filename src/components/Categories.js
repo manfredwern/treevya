@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import QuizContext from '../QuizContext';
 import { fetchDataFromApi } from '../services/helper';
 import TriviaApi from '../data/opentrivia';
-import cats from '../data/categories';
+import initialCategories from '../data/categories';
 
 const Categories = () => {
   const { setCategory } = useContext(QuizContext);
@@ -25,7 +25,7 @@ const Categories = () => {
           name: category.name.replace(/Entertainment:|Science:/, '').trim(),
         })),
       );
-      setCategories([...cats, ...responseCategories]);
+      setCategories([...initialCategories, ...responseCategories]);
     })();
 
     return setCategories([]);

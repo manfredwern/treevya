@@ -3,16 +3,13 @@ import QuizContext from '../QuizContext';
 import TriviaApi from '../data/opentrivia';
 import { fetchDataFromApi, shuffleArray } from '../services/helper';
 
-const Play = () => {
+const PlayGame = () => {
   const { gamePlay, setQuestions, setNewGame } = useContext(QuizContext);
-
-  console.log(gamePlay);
 
   const handleClick = async () => {
     let questionsUrl = `${TriviaApi.url}&category=${gamePlay.category.id}&difficulty=${gamePlay.level}`;
 
     const questions = await fetchDataFromApi(questionsUrl, true).then((data) => {
-      console.log('DATA', data);
       const sortedResponse = data.results.map((resQuestion) => {
         const choices = [...resQuestion.incorrect_answers, resQuestion.correct_answer];
         shuffleArray(choices);
@@ -34,7 +31,7 @@ const Play = () => {
 
   return (
     <button
-      className="button  p-6 is-size-2 is-large is-fullwidth has-background-success-dark	has-text-primary-light"
+      className="button p-6 is-size-2 is-large is-fullwidth has-background-success-dark	has-text-primary-light"
       type="button"
       disabled={!gamePlay.level}
       onClick={handleClick}
@@ -44,4 +41,4 @@ const Play = () => {
   );
 };
 
-export default Play;
+export default PlayGame;

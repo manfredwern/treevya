@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monofett&display=swap');
 
 body {
   margin: 0;
@@ -15,6 +16,11 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.game-title {
+  font-family: 'Monofett', cursive;
+  font-size: 5rem !important;
 }
 
 .title,

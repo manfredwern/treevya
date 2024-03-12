@@ -33,16 +33,14 @@ const Play = () => {
   };
 
   return (
-    <>
-      <button
-        className="button  p-6 is-size-2 is-large is-fullwidth has-background-success-dark	has-text-primary-light"
-        type="button"
-        disabled={!gamePlay.level}
-        onClick={handleClick}
-      >
-        Play
-      </button>
-    </>
+    <button
+      className="button  p-6 is-size-2 is-large is-fullwidth has-background-success-dark	has-text-primary-light"
+      type="button"
+      disabled={!gamePlay.level}
+      onClick={handleClick}
+    >
+      Play
+    </button>
   );
 };
 
